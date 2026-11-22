@@ -23,4 +23,9 @@ const store = {
   set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { } },
   del(k) { try { localStorage.removeItem(k); } catch (e) { } }
 };
-const SAVE_KEY = 'driftwood-isle-save-v1';
+// Debug mode: open the game with ?debug in the address (or #debug). Debug games use their own save slot.
+const DEBUG = {
+  on: /[?&]debug\b/.test(location.search) || location.hash === '#debug',
+  timeScale: 1, god: false, hitboxes: false, fps: 0
+};
+const SAVE_KEY = DEBUG.on ? 'driftwood-isle-save-debug' : 'driftwood-isle-save-v1';

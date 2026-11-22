@@ -77,6 +77,7 @@ function render() {
     g.addColorStop(0, 'rgba(30,50,70,.10)'); g.addColorStop(.6, 'rgba(30,50,70,.07)'); g.addColorStop(1, 'rgba(30,50,70,0)');
     ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(c.x, c.y, c.r * 1.4, c.r, 0, 0, TAU); ctx.fill();
   }
+  if (DEBUG.hitboxes) drawDebugWorld(x0, y0, vw, vh);
   // ===== screen-space overlays =====
   ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
   const hr = S ? hour() : 10.5, night = nightAmt(hr), rain = S ? S.weather.rain : 0;

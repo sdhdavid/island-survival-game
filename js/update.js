@@ -10,7 +10,7 @@ function update(dt) {
   if (mode === 'sailing') { updateSail(dt); updateAmbient(dt); updateParticles(dt); updateFires(dt); return; }
   if (paused) return;
   const playing = mode === 'play';
-  if (playing) S.time += dt / DAY_LEN;
+  if (playing) S.time += dt * DEBUG.timeScale / DAY_LEN;
   const p = S.p, st = S.st, hr = hour(), night = nightAmt(hr);
   // movement
   let mx = 0, my = 0;
@@ -68,6 +68,7 @@ function update(dt) {
       const drain = cold * (nearShelter ? .5 : 1);
       if (drain > .05) st.warmth = Math.max(0, st.warmth - dt * drain); else st.warmth = Math.min(100, st.warmth + dt * 3);
     }
+    if (DEBUG.god) { st.health = st.hunger = st.thirst = st.warmth = 100; }
     let hurt = 0; if (st.hunger <= 0) hurt += 1.1; if (st.thirst <= 0) hurt += 1.4; if (st.warmth <= 0) hurt += 1.5;
     if (hurt) { st.health = Math.max(0, st.health - hurt * dt); if (Math.random() < dt * .4) SFX.hurt(); }
     else if (st.hunger > 35 && st.thirst > 35 && st.warmth > 30) st.health = Math.min(100, st.health + dt * .7);

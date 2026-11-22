@@ -1,6 +1,6 @@
 "use strict";
 // ================= Boot =================
-let T = 0, last = performance.now(), hudTimer = 0, mapTimer = 0;
+let last = performance.now(), hudTimer = 0, mapTimer = 0;
 function frame(now) {
   const dt = Math.min(.05, (now - last) / 1000); last = now; Tm += dt;
   if (ready) {
@@ -10,6 +10,7 @@ function frame(now) {
       hudTimer -= dt; if (hudTimer <= 0) { hudTimer = .1; updateHUD(); drawDial(); }
       mapTimer -= dt; if (mapTimer <= 0) { mapTimer = .25; drawMinimap(); }
     }
+    if (DEBUG.on) debugTick(dt);
   }
   requestAnimationFrame(frame);
 }
@@ -22,11 +23,11 @@ function boot(hotData) {
     if (saved && !saved.flags?.won) { $('contBtn').hidden = false; sb.textContent = 'New game'; }
     if (store.get('driftwood-muted')) { AU.muted = true; $('muteWave').style.display = 'none'; }
     setupTouch();
+    if (DEBUG.on) setupDebug();
     if (hotData && hotData.save && hotData.playing) startFrom(hotData.save);
   }, 40);
   requestAnimationFrame(frame);
 }
-window.claude?.hot?.snapshot?.(() => ({ save: serialize(), playing: mode === 'play' }));
-window.claude?.hot?.ready ? window.claude.hot.ready(boot) : boot(window.claude?.hot?.data ?? {});
+boot({});
 window.addEventListener('beforeunload', saveGame);
 document.addEventListener('visibilitychange', () => { if (document.hidden) saveGame(); });
