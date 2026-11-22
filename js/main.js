@@ -19,6 +19,7 @@ function boot(hotData) {
     genHeights(); genTerrainImage(); genObjects(); makeIcons();
     ready = true; mode = 'title';
     const sb = $('startBtn'); sb.disabled = false; sb.textContent = 'Begin';
+    $('ver').textContent = 'v' + GAME_VERSION + (DEBUG.on ? ' · debug' : '');
     const saved = hotData && hotData.save ? hotData.save : store.get(SAVE_KEY);
     if (saved && !saved.flags?.won) { $('contBtn').hidden = false; sb.textContent = 'New game'; }
     if (store.get('driftwood-muted')) { AU.muted = true; $('muteWave').style.display = 'none'; }

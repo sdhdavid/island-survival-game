@@ -1,4 +1,7 @@
 "use strict";
+// Game version: bump on every change that goes to main, and add a matching entry to CHANGELOG.md
+const GAME_VERSION = '0.2.1';
+
 // ================= Utilities =================
 const TAU = Math.PI * 2;
 const clamp = (v, a, b) => v < a ? a : v > b ? b : v;
