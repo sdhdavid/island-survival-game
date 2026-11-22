@@ -9,7 +9,7 @@ const LRI = '⁦', PDI = '⁩'; // keeps "+3" reading left-to-right inside Hebre
 
 const STR = {
   en: {
-    'game.title': 'Driftwood Isle',
+    'game.title': "Yoni's Island",
     'lang.other': 'עברית',
     'title.eyebrow': 'SURVIVE',
     'title.tag': 'Wash ashore, gather what the tide left, keep a fire burning through the night, and build a raft to sail home.',
@@ -45,8 +45,8 @@ const STR = {
     'help.p3': 'Your goal: build a raft in the shallows, pack three cooked meals and sail home. Your progress saves automatically in this browser.',
     'help.lang': 'Language',
 
-    'end.title': 'Home at last',
-    'end.text': 'You sailed away from Driftwood Isle on day {d}. The smoke from your last campfire curled up behind you as the island shrank to a green dot on the horizon.',
+    'end.title': 'Home at last, Yoni!',
+    'end.text': 'You sailed away from the island on day {d}. The smoke from your last campfire curled up behind you as the island shrank to a green dot on the horizon.',
     'end.days': 'days survived', 'end.fish': 'fish caught', 'end.shells': 'shells found', 'end.trees': 'trees felled',
     'end.again': 'Play again',
 
@@ -103,18 +103,18 @@ const STR = {
 
     'msg.shells.t': 'Shell collector', 'msg.shells.b': 'You found every seashell on the island. A lovely souvenir to take home.',
     'msg.surprise.t': 'A surprise', 'msg.surprise.b': 'You hooked a shell instead of a fish.',
-    'msg.intro.t': 'Washed ashore', 'msg.intro.b': 'Your ship is gone, but the sea left a few things on the sand. Open the crate nearby, then gather what you can before night falls. It gets cold here.',
-    'msg.back.t': 'Welcome back', 'msg.back.b': 'Your camp is just as you left it.',
+    'msg.intro.t': 'Washed ashore, Yoni', 'msg.intro.b': 'Your ship is gone, but the sea left a few things on the sand. Open the crate nearby, then gather what you can before night falls. It gets cold here.',
+    'msg.back.t': 'Welcome back, Yoni', 'msg.back.b': 'Your camp is just as you left it.',
     'msg.wake.t': 'You wake up on the beach', 'msg.wake.b': 'Someone, or the tide, carried you back. Keep eating, drinking and stay near a fire at night.',
     'note1.t': 'A note, tucked in the crate', 'note1.b': 'Whoever finds this: there is a freshwater pond in the north-west woods. Rope is just grass fibre, twisted. Keep a fire going at night. — M.',
     'note2.t': 'Salvaged sailcloth', 'note2.b': 'Still dry! A raft needs a sail, plenty of rope and a lot of logs.',
     'note3.t': 'Another crate', 'note3.b': 'More sailcloth and some supplies from the ship.',
 
-    'banner.quest': 'Objective complete', 'banner.next': 'Next: {q}',
+    'banner.quest': 'Well done, Yoni!', 'banner.next': 'Next: {q}',
     'banner.rain': 'Rain rolls in', 'banner.rainSub': 'Stay warm by the fire',
     'banner.day0': 'The tide brought new driftwood', 'banner.day1': 'Birds are singing in the palms',
     'banner.day2': 'Another morning on the island', 'banner.day3': 'The sea looks calm today',
-    'banner.sail': 'Set sail!', 'banner.sailSub': 'Goodbye, Driftwood Isle',
+    'banner.sail': 'Set sail!', 'banner.sailSub': 'Goodbye, island!',
 
     'q1': 'Open the washed-up crate on the beach',
     'q2': 'Gather sticks and stones', 'q2.p': '{w}/3 wood · {s}/2 stone',
@@ -134,7 +134,7 @@ const STR = {
   },
 
   he: {
-    'game.title': 'האי הבודד',
+    'game.title': 'האי של יוני',
     'lang.other': 'English',
     'title.eyebrow': 'הישרדות',
     'title.tag': 'נסחפת לאי בודד. אסוף מה שהים השאיר, שמור על מדורה דולקת בלילה, ובנה רפסודה כדי להפליג הביתה.',
@@ -170,7 +170,7 @@ const STR = {
     'help.p3': 'המטרה: לבנות רפסודה במים הרדודים, לארוז שלוש ארוחות מבושלות ולהפליג הביתה. המשחק נשמר לבד בדפדפן הזה.',
     'help.lang': 'שפה',
 
-    'end.title': 'סוף סוף בבית!',
+    'end.title': 'סוף סוף בבית, יוני!',
     'end.text': 'הפלגת מהאי ביום {d}. העשן מהמדורה האחרונה שלך עלה מאחוריך, והאי נהיה נקודה ירוקה קטנה באופק.',
     'end.days': 'ימים על האי', 'end.fish': 'דגים שתפסת', 'end.shells': 'צדפים שמצאת', 'end.trees': 'עצים שכרתת',
     'end.again': 'לשחק שוב',
@@ -228,18 +228,18 @@ const STR = {
 
     'msg.shells.t': 'אספן צדפים', 'msg.shells.b': 'מצאת את כל הצדפים באי! מזכרת יפה לקחת הביתה.',
     'msg.surprise.t': 'הפתעה!', 'msg.surprise.b': 'במקום דג, תפסת צדף.',
-    'msg.intro.t': 'נסחפת לחוף', 'msg.intro.b': 'הספינה שלך נעלמה, אבל הים השאיר כמה דברים על החול. פתח את הארגז שליד, ואסוף מה שאפשר לפני שמחשיך. בלילה קר כאן.',
-    'msg.back.t': 'ברוך שובך', 'msg.back.b': 'המחנה שלך מחכה בדיוק כמו שהשארת אותו.',
+    'msg.intro.t': 'יוני, נסחפת לחוף!', 'msg.intro.b': 'הספינה שלך נעלמה, אבל הים השאיר כמה דברים על החול. פתח את הארגז שליד, ואסוף מה שאפשר לפני שמחשיך. בלילה קר כאן.',
+    'msg.back.t': 'ברוך שובך, יוני!', 'msg.back.b': 'המחנה שלך מחכה בדיוק כמו שהשארת אותו.',
     'msg.wake.t': 'התעוררת על החוף', 'msg.wake.b': 'הגלים החזירו אותך לחוף. זכור לאכול, לשתות ולהישאר ליד מדורה בלילה.',
     'note1.t': 'פתק בתוך הארגז', 'note1.b': 'מי שמוצא את זה: יש בריכה של מים מתוקים ביער בצפון-מערב. חבל עושים מסיבים של עשב. תשמור על מדורה דולקת בלילה. — מ.',
     'note2.t': 'בד מפרש!', 'note2.b': 'עדיין יבש! לרפסודה צריך מפרש, הרבה חבלים והמון עצים.',
     'note3.t': 'עוד ארגז', 'note3.b': 'עוד בד מפרש וקצת ציוד מהספינה.',
 
-    'banner.quest': 'כל הכבוד!', 'banner.next': 'המשימה הבאה: {q}',
+    'banner.quest': 'כל הכבוד, יוני!', 'banner.next': 'המשימה הבאה: {q}',
     'banner.rain': 'מתחיל לרדת גשם', 'banner.rainSub': 'כדאי להתחמם ליד המדורה',
     'banner.day0': 'הגלים הביאו עוד עצים לחוף', 'banner.day1': 'הציפורים שרות בדקלים',
     'banner.day2': 'עוד בוקר על האי', 'banner.day3': 'הים שקט היום',
-    'banner.sail': 'מפליגים!', 'banner.sailSub': 'להתראות, אי בודד!',
+    'banner.sail': 'מפליגים!', 'banner.sailSub': 'להתראות, אי!',
 
     'q1': 'פתח את הארגז שעל החוף',
     'q2': 'אסוף מקלות ואבנים', 'q2.p': '{w}/3 עצים · {s}/2 אבנים',
