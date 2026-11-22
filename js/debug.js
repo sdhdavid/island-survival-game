@@ -110,7 +110,7 @@ function debugTick(dt) {
   debugInfoTimer -= dt;
   if (debugInfoTimer > 0 || !debugInfoEl || debugEl.classList.contains('collapsed')) return;
   debugInfoTimer = .2;
-  const lines = [`fps   ${DEBUG.fps}   mode ${mode}`];
+  const lines = [`v${GAME_VERSION}   fps ${DEBUG.fps}   mode ${mode}`];
   if (S) {
     const h = Hh(S.p.x, S.p.y), hr = hour();
     lines.push(`pos   ${S.p.x | 0}, ${S.p.y | 0}   h ${h.toFixed(3)}`);

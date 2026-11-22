@@ -7,3 +7,5 @@
 - Debug mode: open with `?debug`. Add new debug buttons to `DEBUG_ACTIONS` in `js/debug.js`.
 - The world is generated from fixed seeds; changing generation order in `genObjects` changes object ids and breaks existing saves (`serialize` stores object state by id). Bump `SAVE_KEY` if that happens.
 - The owner writes in Hebrew; README is in Hebrew. Code and comments stay in English.
+- Versioning: every change merged to main bumps `GAME_VERSION` in `js/util.js` (shown in-game) and adds an entry at the top of `CHANGELOG.md` (in Hebrew). Patch (0.2.x) for fixes and small tweaks, minor (0.x.0) for new features or content.
+- Workflow (approved by the owner): every change goes on its own branch with a pull request. Once the checks pass (load the game, play through the affected feature, desktop and phone widths, no console errors), merge the PR yourself without asking, then tell the owner the new version number and what changed.
