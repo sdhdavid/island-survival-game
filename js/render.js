@@ -60,7 +60,7 @@ function render() {
   // butterflies
   for (const b of butterflies) { const f = Math.abs(Math.sin(b.t * 14)); ctx.fillStyle = 'rgba(40,60,30,.15)'; ctx.beginPath(); ctx.ellipse(b.x + 6, b.y + 14, 3, 1.5, 0, 0, TAU); ctx.fill(); ctx.fillStyle = b.c; ctx.beginPath(); ctx.ellipse(b.x - 2.5 * f - .5, b.y, 3 * f + .6, 3.4, 0, 0, TAU); ctx.ellipse(b.x + 2.5 * f + .5, b.y, 3 * f + .6, 3.4, 0, 0, TAU); ctx.fill(); ctx.fillStyle = '#4a3a2a'; ctx.fillRect(b.x - .6, b.y - 2.5, 1.2, 5); }
   // floaters
-  ctx.font = '800 13px Grandstander, "Trebuchet MS", sans-serif'; ctx.textAlign = 'center'; ctx.lineJoin = 'round';
+  ctx.font = canvasFont(13); ctx.textAlign = 'center'; ctx.lineJoin = 'round';
   for (const f of floaters) { ctx.globalAlpha = clamp(f.life * 1.5, 0, 1); ctx.lineWidth = 4; ctx.strokeStyle = 'rgba(44,37,29,.8)'; ctx.strokeText(f.text, f.x, f.y); ctx.fillStyle = '#fff4dc'; ctx.fillText(f.text, f.x, f.y); }
   ctx.globalAlpha = 1;
   // gulls (high above)
@@ -329,7 +329,7 @@ function drawFishing(t) {
   ctx.strokeStyle = 'rgba(255,255,255,.75)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(hx, hy); ctx.quadraticCurveTo((hx + f.bx) / 2, Math.max(hy, f.by) + 8, f.bx, f.by + bob - 3); ctx.stroke();
   const rp = (t * .8) % 1; ctx.strokeStyle = `rgba(255,255,255,${.5 * (1 - rp)})`; ctx.beginPath(); ctx.ellipse(f.bx, f.by + 2, 5 + rp * 12, (5 + rp * 12) * .45, 0, 0, TAU); ctx.stroke();
   circ(f.bx, f.by + bob - 2, 4, '#e8574f'); ctx.fillStyle = '#fff'; ctx.fillRect(f.bx - 4, f.by + bob - 2, 8, 3);
-  if (f.phase === 'bite') { ctx.font = '800 22px Grandstander, sans-serif'; ctx.textAlign = 'center'; ctx.lineWidth = 4; ctx.strokeStyle = '#2c251d'; ctx.strokeText('!', f.bx, f.by - 14); ctx.fillStyle = '#ffc857'; ctx.fillText('!', f.bx, f.by - 14); }
+  if (f.phase === 'bite') { ctx.font = canvasFont(22); ctx.textAlign = 'center'; ctx.lineWidth = 4; ctx.strokeStyle = '#2c251d'; ctx.strokeText('!', f.bx, f.by - 14); ctx.fillStyle = '#ffc857'; ctx.fillText('!', f.bx, f.by - 14); }
 }
 function drawCrab(c, t) {
   const x = c.x, y = c.y, w = Math.sin(c.ph * 2);

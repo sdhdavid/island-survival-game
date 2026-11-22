@@ -160,3 +160,20 @@ body.touch #prompt{bottom:calc(220px + env(safe-area-inset-bottom,0px))}
 .dbg-group{grid-column:1/-1;margin-top:6px;font-family:var(--display);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--honey);font-weight:700}
 .dbg-hint{margin-top:8px;color:var(--muted);font-size:11px}
 .dbg-hint kbd{font-family:var(--display);background:var(--cream);color:var(--ink);border-radius:5px;padding:0 5px}
+
+/* Language: Hebrew uses fonts that include Hebrew letters, and the UI reads right to left */
+:root[lang="he"]{--display:"Fredoka","Rubik","Arial Hebrew",system-ui,sans-serif;--body:"Rubik","Arial Hebrew","Segoe UI",system-ui,sans-serif}
+:root[lang="he"] .label,:root[lang="he"] .dbg-group{letter-spacing:0}
+:root[lang="he"] .logo{letter-spacing:0}
+:root[lang="he"] .logo span{letter-spacing:.06em}
+:root[lang="he"] #qText{font-size:15px}
+.logo b{font-weight:inherit;display:block}
+.keys i{font-style:normal}
+[dir="rtl"] #qStep{float:left}
+[dir="rtl"] #rightcol{align-items:flex-start}
+[dir="rtl"] .stat .num{text-align:left}
+#prompt .x{margin-inline-start:4px;margin-left:0}
+#touch,#debug,#ver{direction:ltr}
+.titleLang{margin-top:14px;border:1px solid rgba(255,244,220,.35);background:rgba(44,36,28,.55);border-radius:999px;padding:7px 16px;font-weight:800;font-size:14px;cursor:pointer;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+.titleLang:hover{background:rgba(44,36,28,.8)}
+.langrow{display:flex;align-items:center;gap:10px;font-weight:700}

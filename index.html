@@ -6,7 +6,7 @@
 <title>Driftwood Isle</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Grandstander:wght@500;700;800&family=Nunito:wght@500;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Grandstander:wght@500;700;800&family=Nunito:wght@500;700;800&family=Fredoka:wght@500;600;700&family=Rubik:wght@500;700;800&display=swap">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -20,15 +20,15 @@
       <div class="stat" id="s-thirst"><svg viewBox="0 0 24 24"><path fill="#62cfe0" d="M12 2.5S5 10.4 5 15a7 7 0 0 0 14 0c0-4.6-7-12.5-7-12.5z"/><path fill="#fff" opacity=".55" d="M9 15.5a3 3 0 0 0 2.5 3" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg><div class="bar"><i style="background:#62cfe0"></i></div><span class="num">100</span></div>
       <div class="stat" id="s-warmth"><svg viewBox="0 0 24 24"><path fill="#ff8a5b" d="M12 22c-4 0-7-2.8-7-6.6 0-3.6 2.6-5.6 3.7-8.9.9 1.6 1.2 2.8 1.2 4 1.6-1.6 3-4.4 2.6-8.5 4.3 2.7 7.5 7.4 7.5 12.6C20 18.9 16.4 22 12 22z"/><path fill="#ffd56b" d="M12 20.5c-1.9 0-3.3-1.3-3.3-3 0-1.9 1.9-3 2.4-5 1.8 1.2 4.2 2.9 4.2 5 0 1.7-1.4 3-3.3 3z"/></svg><div class="bar"><i style="background:#ff8a5b"></i></div><span class="num">100</span></div>
     </div>
-    <div id="quest" class="card"><div class="label">Objective <span id="qStep"></span></div><div id="qText"></div><div id="qProg"></div></div>
+    <div id="quest" class="card"><div class="label"><span data-i18n="hud.objective">Objective</span> <span id="qStep"></span></div><div id="qText"></div><div id="qProg"></div></div>
   </div>
   <div id="rightcol">
     <div id="clock" class="card"><canvas id="dial" width="88" height="88"></canvas><div><div id="dayLabel">Day 1</div><div id="timeLabel">7:00 am</div></div></div>
     <div id="mapwrap" class="card"><canvas id="minimap" width="256" height="256"></canvas></div>
     <div class="iconrow">
-      <button class="iconbtn" id="craftBtn" title="Crafting (C)" aria-label="Open crafting"><svg viewBox="0 0 24 24" fill="none" stroke="#fff4dc" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4l6 6-3 3-6-6z"/><path d="M11 7L3 15l3 3 8-8"/></svg></button>
-      <button class="iconbtn" id="muteBtn" title="Sound (M)" aria-label="Toggle sound"><svg viewBox="0 0 24 24" fill="none" stroke="#fff4dc" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h4l5-4v14l-5-4H4z"/><path id="muteWave" d="M16.5 8.5a5 5 0 0 1 0 7"/></svg></button>
-      <button class="iconbtn" id="helpBtn" title="How to play (H)" aria-label="How to play">?</button>
+      <button class="iconbtn" id="craftBtn" title="Crafting (C)" aria-label="Open crafting" data-i18n-title="hud.craftTitle" data-i18n-aria="hud.craftAria"><svg viewBox="0 0 24 24" fill="none" stroke="#fff4dc" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4l6 6-3 3-6-6z"/><path d="M11 7L3 15l3 3 8-8"/></svg></button>
+      <button class="iconbtn" id="muteBtn" title="Sound (M)" aria-label="Toggle sound" data-i18n-title="hud.soundTitle" data-i18n-aria="hud.soundAria"><svg viewBox="0 0 24 24" fill="none" stroke="#fff4dc" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h4l5-4v14l-5-4H4z"/><path id="muteWave" d="M16.5 8.5a5 5 0 0 1 0 7"/></svg></button>
+      <button class="iconbtn" id="helpBtn" title="How to play (H)" aria-label="How to play" data-i18n-title="hud.helpTitle" data-i18n-aria="hud.helpAria">?</button>
     </div>
   </div>
   <div id="prompt" class="card" hidden></div>
@@ -38,57 +38,59 @@
   <div id="touch" hidden>
     <div id="stick"><div id="knob"></div></div>
     <div id="tbtns">
-      <div id="tcol"><button class="tb" id="tCraft">Craft</button><button class="tb" id="tEat">Eat</button></div>
-      <button class="tb main" id="tAct">Use</button>
+      <div id="tcol"><button class="tb" id="tCraft" data-i18n="touch.craft">Craft</button><button class="tb" id="tEat" data-i18n="touch.eat">Eat</button></div>
+      <button class="tb main" id="tAct" data-i18n="touch.use">Use</button>
     </div>
   </div>
 </div>
 
 <div id="craft" class="overlay" hidden>
-  <div class="sheet" role="dialog" aria-label="Crafting">
-    <header><h2>Crafting</h2><button class="closeb" id="craftClose">Close</button></header>
+  <div class="sheet" role="dialog" aria-label="Crafting" data-i18n-aria="craft.title">
+    <header><h2 data-i18n="craft.title">Crafting</h2><button class="closeb" id="craftClose" data-i18n="ui.close">Close</button></header>
     <div id="recipes"></div>
-    <div class="hint">Time pauses while this is open. Campfires, the lean-to and the raft are placed in front of you after crafting.</div>
+    <div class="hint" data-i18n="craft.hint">Time pauses while this is open. Campfires, the lean-to and the raft are placed in front of you after crafting.</div>
   </div>
 </div>
 
 <div id="help" class="overlay" hidden>
-  <div class="sheet" role="dialog" aria-label="How to play">
-    <header><h2>How to survive</h2><button class="closeb" id="helpClose">Close</button></header>
+  <div class="sheet" role="dialog" aria-label="How to play" data-i18n-aria="hud.helpAria">
+    <header><h2 data-i18n="help.title">How to survive</h2><button class="closeb" id="helpClose" data-i18n="ui.close">Close</button></header>
     <div class="help">
       <div class="grid">
-        <div><kbd>WASD</kbd> or arrows: walk</div>
-        <div><kbd>E</kbd> or <kbd>Space</kbd>: use / gather</div>
-        <div><kbd>C</kbd>: crafting</div>
-        <div><kbd>F</kbd>: eat the best food</div>
-        <div><kbd>Esc</kbd>: cancel placing</div>
-        <div><kbd>M</kbd>: sound on/off</div>
+        <div data-i18n-html="help.k1"><kbd>WASD</kbd> or arrows: walk</div>
+        <div data-i18n-html="help.k2"><kbd>E</kbd> or <kbd>Space</kbd>: use / gather</div>
+        <div data-i18n-html="help.k3"><kbd>C</kbd>: crafting</div>
+        <div data-i18n-html="help.k4"><kbd>F</kbd>: eat the best food</div>
+        <div data-i18n-html="help.k5"><kbd>Esc</kbd>: cancel placing</div>
+        <div data-i18n-html="help.k6"><kbd>M</kbd>: sound on/off</div>
       </div>
-      <p>Keep your four needs up. Hunger and thirst fall all day. Warmth falls after dark and in the rain, so stay close to a lit campfire at night. If any need hits zero you start losing health.</p>
-      <p>Drink at the freshwater pond. Click a food in your bag to eat it. Cooked fish and crab fill you up far better than raw.</p>
-      <p>Your goal: build a raft in the shallows, pack three cooked meals and sail home. Your progress saves automatically in this browser.</p>
+      <p data-i18n="help.p1">Keep your four needs up. Hunger and thirst fall all day. Warmth falls after dark and in the rain, so stay close to a lit campfire at night. If any need hits zero you start losing health.</p>
+      <p data-i18n="help.p2">Drink at the freshwater pond. Click a food in your bag to eat it. Cooked fish and crab fill you up far better than raw.</p>
+      <p data-i18n="help.p3">Your goal: build a raft in the shallows, pack three cooked meals and sail home. Your progress saves automatically in this browser.</p>
+      <div class="langrow"><span data-i18n="help.lang">Language</span> <button class="closeb langBtn" id="langBtnHelp">עברית</button></div>
     </div>
   </div>
 </div>
 
 <div id="end" class="overlay" hidden>
   <div class="sheet">
-    <h2 id="endTitle">Home at last</h2>
+    <h2 id="endTitle" data-i18n="end.title">Home at last</h2>
     <p id="endText"></p>
     <div class="endstats" id="endStats"></div>
-    <button class="big-btn" id="againBtn">Play again</button>
+    <button class="big-btn" id="againBtn" data-i18n="end.again">Play again</button>
   </div>
 </div>
 
 <div id="title">
   <div class="tcard">
-    <div class="logo"><span>SURVIVE</span>Driftwood Isle</div>
-    <div class="tag">Wash ashore, gather what the tide left, keep a fire burning through the night, and build a raft to sail home.</div>
+    <div class="logo"><span data-i18n="title.eyebrow">SURVIVE</span><b data-i18n="game.title">Driftwood Isle</b></div>
+    <div class="tag" data-i18n="title.tag">Wash ashore, gather what the tide left, keep a fire burning through the night, and build a raft to sail home.</div>
     <div class="tbtnrow">
       <button class="big-btn" id="startBtn" disabled>Washing ashore…</button>
-      <button class="big-btn alt" id="contBtn" hidden>Continue</button>
+      <button class="big-btn alt" id="contBtn" hidden data-i18n="title.continue">Continue</button>
     </div>
-    <div class="keys card"><span><kbd>WASD</kbd>walk</span><span><kbd>E</kbd>use</span><span><kbd>C</kbd>craft</span><span><kbd>F</kbd>eat</span></div>
+    <div class="keys card"><span><kbd>WASD</kbd><i data-i18n="keys.walk">walk</i></span><span><kbd>E</kbd><i data-i18n="keys.use">use</i></span><span><kbd>C</kbd><i data-i18n="keys.craft">craft</i></span><span><kbd>F</kbd><i data-i18n="keys.eat">eat</i></span></div>
+    <div><button class="langBtn titleLang" id="langBtnTitle">עברית</button></div>
   </div>
 </div>
 <div id="ver"></div>
@@ -96,6 +98,7 @@
 <div id="fadeText"></div>
 
 <script src="js/util.js"></script>
+<script src="js/i18n.js"></script>
 <script src="js/world.js"></script>
 <script src="js/objects.js"></script>
 <script src="js/items.js"></script>
