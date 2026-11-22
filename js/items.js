@@ -1,23 +1,23 @@
 "use strict";
 // ================= Items & recipes =================
 const ITEMS = {
-  axe: { n: 'Stone Axe', tool: 1 }, pickaxe: { n: 'Stone Pickaxe', tool: 1 }, rod: { n: 'Fishing Rod', tool: 1 },
-  wood: { n: 'Wood' }, stone: { n: 'Stone' }, fiber: { n: 'Fiber' }, rope: { n: 'Rope' }, cloth: { n: 'Sailcloth' }, sail: { n: 'Sail' },
-  berries: { n: 'Berries', food: { hu: 9, th: 4 } }, coconut: { n: 'Coconut', food: { hu: 10, th: 30 } },
-  fish: { n: 'Raw Fish', food: { hu: 10, he: -6 }, raw: 'cookedFish' }, crab: { n: 'Crab Meat', food: { hu: 8, he: -6 }, raw: 'cookedCrab' },
-  cookedFish: { n: 'Grilled Fish', food: { hu: 36, he: 6, wa: 5 }, cooked: 1 }, cookedCrab: { n: 'Roast Crab', food: { hu: 30, he: 6, wa: 5 }, cooked: 1 },
-  shell: { n: 'Seashell' }
+  axe: { tool: 1 }, pickaxe: { tool: 1 }, rod: { tool: 1 },
+  wood: {}, stone: {}, fiber: {}, rope: {}, cloth: {}, sail: {},
+  berries: { food: { hu: 9, th: 4 } }, coconut: { food: { hu: 10, th: 30 } },
+  fish: { food: { hu: 10, he: -6 }, raw: 'cookedFish' }, crab: { food: { hu: 8, he: -6 }, raw: 'cookedCrab' },
+  cookedFish: { food: { hu: 36, he: 6, wa: 5 }, cooked: 1 }, cookedCrab: { food: { hu: 30, he: 6, wa: 5 }, cooked: 1 },
+  shell: {}
 };
 const ORDER = ['axe', 'pickaxe', 'rod', 'wood', 'stone', 'fiber', 'rope', 'cloth', 'sail', 'berries', 'coconut', 'fish', 'crab', 'cookedFish', 'cookedCrab', 'shell'];
 const RECIPES = [
-  { id: 'axe', n: 'Stone Axe', d: 'Chop trees for logs.', cost: { wood: 3, stone: 2, fiber: 2 }, tool: 1 },
-  { id: 'campfire', n: 'Campfire', d: 'Warmth, light and a place to cook.', cost: { wood: 5, stone: 4 }, place: 1 },
-  { id: 'rod', n: 'Fishing Rod', d: 'Cast from any sea shore.', cost: { wood: 2, fiber: 3 }, tool: 1 },
-  { id: 'pickaxe', n: 'Stone Pickaxe', d: 'Break boulders for stone.', cost: { wood: 3, stone: 3, fiber: 2 }, tool: 1 },
-  { id: 'rope', n: 'Rope', d: 'Twisted fiber. Holds things together.', cost: { fiber: 3 } },
-  { id: 'leanto', n: 'Lean-to', d: 'A dry bed. Sleep through the night.', cost: { wood: 8, fiber: 4, rope: 1 }, place: 1 },
-  { id: 'sail', n: 'Sail', d: 'Stitched from salvaged sailcloth.', cost: { cloth: 2, rope: 2 } },
-  { id: 'raft', n: 'Raft', d: 'Your way home. Build it in the shallows.', cost: { wood: 16, rope: 4, sail: 1 }, place: 1 }
+  { id: 'axe', cost: { wood: 3, stone: 2, fiber: 2 }, tool: 1 },
+  { id: 'campfire', cost: { wood: 5, stone: 4 }, place: 1 },
+  { id: 'rod', cost: { wood: 2, fiber: 3 }, tool: 1 },
+  { id: 'pickaxe', cost: { wood: 3, stone: 3, fiber: 2 }, tool: 1 },
+  { id: 'rope', cost: { fiber: 3 } },
+  { id: 'leanto', cost: { wood: 8, fiber: 4, rope: 1 }, place: 1 },
+  { id: 'sail', cost: { cloth: 2, rope: 2 } },
+  { id: 'raft', cost: { wood: 16, rope: 4, sail: 1 }, place: 1 }
 ];
 
 // ================= Icons =================

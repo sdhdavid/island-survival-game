@@ -14,14 +14,20 @@ function frame(now) {
   }
   requestAnimationFrame(frame);
 }
+function setStartLabel() {
+  const sb = $('startBtn');
+  sb.textContent = t(sb.disabled ? 'title.loading' : $('contBtn').hidden ? 'title.begin' : 'title.new');
+}
 function boot(hotData) {
+  applyLang();
   setTimeout(() => {
     genHeights(); genTerrainImage(); genObjects(); makeIcons();
     ready = true; mode = 'title';
-    const sb = $('startBtn'); sb.disabled = false; sb.textContent = 'Begin';
+    const sb = $('startBtn'); sb.disabled = false;
     $('ver').textContent = 'v' + GAME_VERSION + (DEBUG.on ? ' · debug' : '');
     const saved = hotData && hotData.save ? hotData.save : store.get(SAVE_KEY);
-    if (saved && !saved.flags?.won) { $('contBtn').hidden = false; sb.textContent = 'New game'; }
+    if (saved && !saved.flags?.won) $('contBtn').hidden = false;
+    setStartLabel();
     if (store.get('driftwood-muted')) { AU.muted = true; $('muteWave').style.display = 'none'; }
     setupTouch();
     if (DEBUG.on) setupDebug();

@@ -12,7 +12,7 @@ function renderHotbar() {
     const it = ITEMS[id];
     const b = document.createElement('button');
     b.className = 'slot' + (it.food ? ' food' : '') + (it.tool ? ' tool' : '') + (flashSlot === id ? ' flash' : '');
-    b.title = it.food ? `${it.n}: click to eat` : it.n; b.setAttribute('aria-label', b.title);
+    b.title = it.food ? t('hud.eatTitle', { item: itemName(id) }) : itemName(id); b.setAttribute('aria-label', b.title);
     b.innerHTML = `<img src="${ICON[id]}" alt="">${it.tool ? '' : `<b>${cnt(id)}</b>`}`;
     if (it.food) b.addEventListener('click', () => { if (mode === 'play' && !paused) eat(id); });
     hb.appendChild(b);
@@ -28,20 +28,22 @@ function updateHUD() {
     if (v !== e.last) { e.bar.style.width = v + '%'; e.num.textContent = v; e.el.classList.toggle('low', v < 25); e.last = v; }
   }
   const q = QUESTS[S.q];
-  const qt = q.t, qp = q.p ? q.p() : '';
+  const qt = t(q.k), qp = q.p ? q.p() : '';
   if ($('qText').textContent !== qt) $('qText').textContent = qt;
   if ($('qProg').textContent !== qp) $('qProg').textContent = qp;
   const step = `${S.q + 1}/${QUESTS.length}`; if ($('qStep').textContent !== step) $('qStep').textContent = step;
-  const day = 'Day ' + (Math.floor(S.time) + 1);
+  const day = t('hud.day', { n: Math.floor(S.time) + 1 });
   if ($('dayLabel').textContent !== day) $('dayLabel').textContent = day;
   const hr = hour(), hh = Math.floor(hr), mm = Math.floor((hr - hh) * 6) * 10;
-  const tl = `${(hh % 12) || 12}:${String(mm).padStart(2, '0')} ${hh < 12 ? 'am' : 'pm'}${S.weather.rain > .3 ? ' · rain' : ''}`;
+  const clock = LANG === 'he' ? `${String(hh).padStart(2, '0')}:${String(mm).padStart(2, '0')}` : `${(hh % 12) || 12}:${String(mm).padStart(2, '0')} ${hh < 12 ? 'am' : 'pm'}`;
+  const tl = clock + (S.weather.rain > .3 ? ' · ' + t('hud.rain') : '');
   if ($('timeLabel').textContent !== tl) $('timeLabel').textContent = tl;
   // prompt
   let html = '', off = false;
-  if (placing) { html = placeValid() ? `<kbd>${isTouch ? 'Use' : 'E'}</kbd> Place ${placing.n}` : `${placing.id === 'raft' ? 'Face the shallow sea near a beach' : 'Find an open, flat spot'}`; off = !placeValid(); html += ` <button class="x" id="cancelPlace">Cancel</button>`; }
-  else if (fishing) { html = fishing.phase === 'bite' ? `<kbd>${isTouch ? 'Use' : 'E'}</kbd> Reel it in!` : `Waiting for a bite… <kbd>${isTouch ? 'Use' : 'E'}</kbd> to reel in`; }
-  else if (mode === 'play') { const a = actionFor(findTarget()); if (a) { if (a.fn) html = `<kbd>${isTouch ? 'Use' : 'E'}</kbd> ${a.t}`; else { html = a.t; off = true; } } }
+  const key = `<kbd>${isTouch ? t('touch.use') : 'E'}</kbd>`;
+  if (placing) { html = placeValid() ? `${key} ${t('place.do', { name: t('recipe.' + placing.id) })}` : t(placing.id === 'raft' ? 'place.raftHint' : 'place.spotHint'); off = !placeValid(); html += ` <button class="x" id="cancelPlace">${t('place.cancel')}</button>`; }
+  else if (fishing) { html = fishing.phase === 'bite' ? `${key} ${t('fish.bite')}` : t('fish.wait', { key }); }
+  else if (mode === 'play') { const a = actionFor(findTarget()); if (a) { if (a.fn) html = `${key} ${a.t}`; else { html = a.t; off = true; } } }
   if (html !== lastPrompt) {
     const pe = $('prompt'); pe.innerHTML = html; pe.hidden = !html; pe.classList.toggle('off', off); lastPrompt = html;
     const cb = $('cancelPlace'); if (cb) cb.addEventListener('click', cancelPlacing);

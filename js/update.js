@@ -45,14 +45,14 @@ function update(dt) {
   if (fishing) {
     fishing.t -= dt; if (fishing.cast > 0) fishing.cast -= dt;
     if (fishing.phase === 'wait' && fishing.t <= 0) { fishing.phase = 'bite'; fishing.t = 1.25; SFX.bite(); burst(fishing.bx, fishing.by, 6, 'splash', '#d6f6f4'); }
-    else if (fishing.phase === 'bite' && fishing.t <= 0) { floaters.push({ x: fishing.bx, y: fishing.by - 10, text: 'It got away…', life: 1.2 }); fishing.phase = 'wait'; fishing.t = 2 + Math.random() * 4; }
+    else if (fishing.phase === 'bite' && fishing.t <= 0) { floaters.push({ x: fishing.bx, y: fishing.by - 10, text: t('float.gotAway'), life: 1.2 }); fishing.phase = 'wait'; fishing.t = 2 + Math.random() * 4; }
   }
   // camera
   const lead = 30;
   cam.x = lerp(cam.x, p.x + p.dx * lead, 1 - Math.exp(-dt * 4)); cam.y = lerp(cam.y, p.y + p.dy * lead * .7, 1 - Math.exp(-dt * 4));
   // weather
   const w = S.weather; w.next -= dt;
-  if (w.next <= 0) { if (w.target > 0) { w.target = 0; w.next = 160 + Math.random() * 200; } else { w.target = .5 + Math.random() * .5; w.next = 35 + Math.random() * 40; if (S.time > .55) showBanner('Rain rolls in', 'Stay warm by the fire', 2.2); } }
+  if (w.next <= 0) { if (w.target > 0) { w.target = 0; w.next = 160 + Math.random() * 200; } else { w.target = .5 + Math.random() * .5; w.next = 35 + Math.random() * 40; if (S.time > .55) showBanner(t('banner.rain'), t('banner.rainSub'), 2.2); } }
   if (S.time < .55) w.target = 0;
   w.rain = lerp(w.rain, w.target, 1 - Math.exp(-dt * .5));
   // fires / warmth
@@ -75,7 +75,7 @@ function update(dt) {
     if (st.health <= 0) faint();
     // day banner
     const dayNum = Math.floor(S.time) + 1;
-    if (dayNum !== S.lastDay && hr > 5.5) { S.lastDay = dayNum; showBanner('Day ' + dayNum, ['The tide brought new driftwood', 'Birds are singing in the palms', 'Another morning on the island', 'The sea looks calm today'][dayNum % 4]); }
+    if (dayNum !== S.lastDay && hr > 5.5) { S.lastDay = dayNum; showBanner(t('hud.day', { n: dayNum }), t('banner.day' + (dayNum % 4))); }
   }
   // regrowth
   tick1 -= dt;
@@ -130,13 +130,13 @@ function updateFires(dt) {
   }
 }
 function faint() {
-  mode = 'cutscene'; fadeTo(true, 'You collapse from exhaustion…');
+  mode = 'cutscene'; fadeTo(true, t('fade.faint'));
   setTimeout(() => {
     const day = Math.floor(S.time); S.time = day + 1.27;
     S.st = { health: 55, hunger: 55, thirst: 55, warmth: 80 };
     S.p.x = SPAWN.x; S.p.y = SPAWN.y; cam.x = S.p.x; cam.y = S.p.y; fishing = null; placing = null;
     fadeTo(false); mode = 'play';
-    showMessage('You wake up on the beach', 'Someone, or the tide, carried you back. Keep eating, drinking and stay near a fire at night.');
+    showMessage(t('msg.wake.t'), t('msg.wake.b'));
     saveGame();
   }, 2600);
 }
@@ -214,7 +214,7 @@ function setSail(o) {
   sail = { o, t: 0, dx: -gx, dy: -gy };
   S.flags.won = 1; store.del(SAVE_KEY);
   SFX.quest();
-  showBanner('Set sail!', 'Goodbye, Driftwood Isle', 4);
+  showBanner(t('banner.sail'), t('banner.sailSub'), 4);
 }
 function updateSail(dt) {
   const s = sail; s.t += dt;
@@ -227,10 +227,13 @@ function updateSail(dt) {
   if (Math.random() < dt * 10) particles.push({ x: s.o.x - s.dx * 30 + (Math.random() - .5) * 30, y: s.o.y - s.dy * 30, vx: 0, vy: 0, life: 1.2, max: 1.2, kind: 'ripple', size: 6 });
   if (s.t > 7 && !s.ended) { s.ended = true; fadeTo(true); setTimeout(showEnd, 1300); }
 }
+function fillEndScreen() {
+  const days = Math.floor(S.time) + 1;
+  $('endText').textContent = t('end.text', { d: days });
+  $('endStats').innerHTML = `<div><b>${days}</b><span>${t('end.days')}</span></div><div><b>${S.flags.fish}</b><span>${t('end.fish')}</span></div><div><b>${S.flags.shells}/14</b><span>${t('end.shells')}</span></div><div><b>${S.flags.chopped}</b><span>${t('end.trees')}</span></div>`;
+}
 function showEnd() {
   mode = 'won';
-  const days = Math.floor(S.time) + 1;
-  $('endText').textContent = `You sailed away from Driftwood Isle on day ${days}. The smoke from your last campfire curled up behind you as the island shrank to a green dot on the horizon.`;
-  $('endStats').innerHTML = `<div><b>${days}</b><span>days survived</span></div><div><b>${S.flags.fish}</b><span>fish caught</span></div><div><b>${S.flags.shells}/14</b><span>shells found</span></div><div><b>${S.flags.chopped}</b><span>trees felled</span></div>`;
+  fillEndScreen();
   $('hud').hidden = true; $('end').hidden = false; fadeTo(false);
 }

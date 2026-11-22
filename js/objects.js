@@ -38,9 +38,9 @@ function genObjects() {
   const wreck = add({ type: 'wreck', x: wr.x, y: wr.y + 6 });
   for (let k = -2; k <= 2; k++) add({ type: 'wreckpart', x: wreck.x + k * 22, y: wreck.y - 4 + Math.abs(k) * 2, solid: 14 });
   const crateDefs = [
-    { a: sa - .2, loot: { wood: 2, berries: 3, cloth: 1 }, note: ['A note, tucked in the crate', 'Whoever finds this: there is a freshwater pond in the north-west woods. Rope is just grass fibre, twisted. Keep a fire going at night. — M.'] },
-    { a: -.38, loot: { cloth: 1, rope: 2, coconut: 1 }, note: ['Salvaged sailcloth', 'Still dry! A raft needs a sail, plenty of rope and a lot of logs.'] },
-    { a: Math.PI + .55, loot: { cloth: 1, fiber: 3, stone: 2 }, note: ['Another crate', 'More sailcloth and some supplies from the ship.'] }
+    { a: sa - .2, loot: { wood: 2, berries: 3, cloth: 1 }, note: 'note1' },
+    { a: -.38, loot: { cloth: 1, rope: 2, coconut: 1 }, note: 'note2' },
+    { a: Math.PI + .55, loot: { cloth: 1, fiber: 3, stone: 2 }, note: 'note3' }
   ];
   crates = [];
   for (const cd of crateDefs) {

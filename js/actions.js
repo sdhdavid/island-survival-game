@@ -29,34 +29,34 @@ function interactable(o) {
 const isNightHour = hr => hr >= 19 || hr < 5;
 function actionFor(T) {
   if (!T) return null;
-  if (T.kind === 'crab') return { t: 'Catch the crab', fn: () => hitCrab(T.c) };
+  if (T.kind === 'crab') return { t: t('act.crab'), fn: () => hitCrab(T.c) };
   if (T.kind === 'water') {
-    if (T.fresh) return { t: 'Drink fresh water', fn: drink };
-    if (has('rod')) return { t: 'Cast fishing line', fn: () => castLine(T) };
-    return { t: 'Too salty to drink. Fresh water is inland' };
+    if (T.fresh) return { t: t('act.drink'), fn: drink };
+    if (has('rod')) return { t: t('act.cast'), fn: () => castLine(T) };
+    return { t: t('act.salty') };
   }
   const o = T.o;
   switch (o.type) {
-    case 'tree': case 'pine': return has('axe') ? { t: 'Chop tree', fn: () => chop(o) } : { t: 'You need a Stone Axe to chop' };
-    case 'palm': return o.c > 0 ? { t: 'Shake palm for coconuts', fn: () => shakePalm(o) } : { t: 'No coconuts left. They grow back' };
-    case 'rock': return has('pickaxe') ? { t: 'Break boulder', fn: () => mine(o) } : { t: 'You need a Stone Pickaxe' };
-    case 'bush': return o.c > 0 ? { t: 'Pick berries', fn: () => pickBush(o) } : { t: 'Berries are regrowing' };
-    case 'grass': return { t: 'Pull fiber', fn: () => pickup(o, 'fiber', 2) };
-    case 'stick': return { t: o.drift ? 'Pick up driftwood' : 'Pick up stick', fn: () => pickup(o, 'wood', 1) };
-    case 'pebble': return { t: 'Pick up stone', fn: () => pickup(o, 'stone', 1) };
-    case 'shell': return { t: 'Pick up seashell', fn: () => pickShell(o) };
-    case 'crate': return { t: 'Open crate', fn: () => openCrate(o) };
+    case 'tree': case 'pine': return has('axe') ? { t: t('act.chop'), fn: () => chop(o) } : { t: t('act.needAxe') };
+    case 'palm': return o.c > 0 ? { t: t('act.shake'), fn: () => shakePalm(o) } : { t: t('act.noCoco') };
+    case 'rock': return has('pickaxe') ? { t: t('act.mine'), fn: () => mine(o) } : { t: t('act.needPick') };
+    case 'bush': return o.c > 0 ? { t: t('act.berries'), fn: () => pickBush(o) } : { t: t('act.noBerries') };
+    case 'grass': return { t: t('act.fiber'), fn: () => pickup(o, 'fiber', 2) };
+    case 'stick': return { t: t(o.drift ? 'act.drift' : 'act.stick'), fn: () => pickup(o, 'wood', 1) };
+    case 'pebble': return { t: t('act.pebble'), fn: () => pickup(o, 'stone', 1) };
+    case 'shell': return { t: t('act.shell'), fn: () => pickShell(o) };
+    case 'crate': return { t: t('act.crate'), fn: () => openCrate(o) };
     case 'campfire': {
       const raw = has('fish') ? 'fish' : has('crab') ? 'crab' : null;
-      if (o.fuel <= 0) return has('wood') ? { t: 'Relight fire with wood', fn: () => fuelFire(o) } : { t: 'The fire is out. Bring wood' };
-      if (raw) return { t: 'Cook ' + ITEMS[raw].n, fn: () => cook(o, raw) };
-      if (o.fuel < 85 && has('wood')) return { t: 'Add wood to the fire', fn: () => fuelFire(o) };
-      return { t: o.fuel < 85 ? 'Fire needs wood soon' : 'The fire is burning well' };
+      if (o.fuel <= 0) return has('wood') ? { t: t('act.relight'), fn: () => fuelFire(o) } : { t: t('act.fireOut') };
+      if (raw) return { t: t('act.cook', { item: itemName(raw) }), fn: () => cook(o, raw) };
+      if (o.fuel < 85 && has('wood')) return { t: t('act.addWood'), fn: () => fuelFire(o) };
+      return { t: t(o.fuel < 85 ? 'act.fireSoon' : 'act.fireGood') };
     }
-    case 'leanto': return isNightHour(hour()) ? { t: 'Sleep until morning', fn: () => sleep(o) } : { t: 'Sleep here after dusk' };
+    case 'leanto': return isNightHour(hour()) ? { t: t('act.sleep'), fn: () => sleep(o) } : { t: t('act.sleepLater') };
     case 'raft': {
       const meals = cnt('cookedFish') + cnt('cookedCrab');
-      return meals >= 3 ? { t: 'Set sail for home', fn: () => setSail(o) } : { t: `Pack 3 cooked meals first (${meals}/3)` };
+      return meals >= 3 ? { t: t('act.sail'), fn: () => setSail(o) } : { t: t('act.needMeals', { n: meals }) };
     }
   }
   return null;
@@ -71,7 +71,7 @@ function doAct() {
 function swing(tool) { S.p.swing = .28; S.p.tool = tool; }
 function give(item, n, x, y) {
   S.inv[item] = cnt(item) + n; hotbarDirty = true; flashSlot = item;
-  floaters.push({ x: x ?? S.p.x, y: (y ?? S.p.y) - 30, text: `+${n} ${ITEMS[item].n}`, life: 1.4, icon: item });
+  floaters.push({ x: x ?? S.p.x, y: (y ?? S.p.y) - 30, text: t('float.gain', { n, item: itemName(item) }), life: 1.4, icon: item });
 }
 function take(item, n) { S.inv[item] = cnt(item) - n; if (S.inv[item] <= 0) delete S.inv[item]; hotbarDirty = true; }
 function burst(x, y, n, kind, color) {
@@ -84,7 +84,7 @@ function pickup(o, item, n) {
   o.st = 'gone'; o.dirty = true; o.rg = S.time + (item === 'fiber' ? .9 : item === 'wood' ? 1.4 : 2.2);
   give(item, n, o.x, o.y); SFX.pop(); burst(o.x, o.y - 4, 6, 'leaf', item === 'fiber' ? '#7cc062' : item === 'wood' ? '#a77a50' : '#b8bdb4'); swing(null);
 }
-function pickShell(o) { o.st = 'gone'; o.dirty = true; o.rg = 0; S.flags.shells++; give('shell', 1, o.x, o.y); SFX.pop(); tone(1300, .3, 'sine', .06, 0, .1); burst(o.x, o.y, 8, 'spark', '#fff3c4'); if (S.flags.shells === 14) showMessage('Shell collector', 'You found every seashell on the island. A lovely souvenir to take home.'); }
+function pickShell(o) { o.st = 'gone'; o.dirty = true; o.rg = 0; S.flags.shells++; give('shell', 1, o.x, o.y); SFX.pop(); tone(1300, .3, 'sine', .06, 0, .1); burst(o.x, o.y, 8, 'spark', '#fff3c4'); if (S.flags.shells === 14) showMessage(t('msg.shells.t'), t('msg.shells.b')); }
 function pickBush(o) { o.c = 0; o.dirty = true; o.rg = S.time + 1; o.shake = 4; give('berries', 3, o.x, o.y); SFX.pop(); burst(o.x, o.y - 10, 8, 'leaf', '#5fae55'); swing(null); }
 function shakePalm(o) {
   o.shake = 6; o.c--; o.dirty = true; if (!o.rg) o.rg = S.time + .5;
@@ -108,11 +108,11 @@ function mine(o) {
 function openCrate(o) {
   o.st = 'open'; o.dirty = true; S.flags.crates++; SFX.crate(); burst(o.x, o.y - 10, 14, 'spark', '#ffe39a'); swing(null);
   let k = 0; for (const [it, n] of Object.entries(o.loot)) { setTimeout(() => { give(it, n, o.x, o.y - k * 2); }, k * 220); k++; }
-  if (o.note) setTimeout(() => showMessage(o.note[0], o.note[1], 9), 500);
+  if (o.note) setTimeout(() => showMessage(t(o.note + '.t'), t(o.note + '.b'), 9), 500);
 }
 function fuelFire(o) { take('wood', 1); o.fuel = Math.min(100, o.fuel + 32); SFX.place(); burst(o.x, o.y - 8, 10, 'spark', '#ffb347'); swing(null); }
 function cook(o, raw) { take(raw, 1); give(ITEMS[raw].raw, 1, o.x, o.y - 10); S.flags.cooked++; SFX.sizzle(); burst(o.x, o.y - 14, 8, 'smoke', '#ddd'); swing(null); }
-function drink() { S.st.thirst = Math.min(100, S.st.thirst + 30); S.flags.drank++; SFX.drink(); const T = findTarget(); burst(T ? T.x : S.p.x, T ? T.y : S.p.y, 8, 'splash', '#bfeff0'); floaters.push({ x: S.p.x, y: S.p.y - 34, text: '+30 Thirst', life: 1.2 }); swing(null); }
+function drink() { S.st.thirst = Math.min(100, S.st.thirst + 30); S.flags.drank++; SFX.drink(); const T = findTarget(); burst(T ? T.x : S.p.x, T ? T.y : S.p.y, 8, 'splash', '#bfeff0'); floaters.push({ x: S.p.x, y: S.p.y - 34, text: t('float.drink'), life: 1.2 }); swing(null); }
 function hitCrab(c) {
   c.hp--; c.flee = 2; c.hurt = .3; swing(has('axe') ? 'axe' : null); noise(.08, .25, 1800, 'bandpass', 0, 3);
   const a = Math.atan2(c.y - S.p.y, c.x - S.p.x); c.x += Math.cos(a) * 8; c.y += Math.sin(a) * 8;
@@ -129,10 +129,10 @@ function reel() {
   if (!fishing) return;
   if (fishing.phase === 'bite') {
     const r = Math.random();
-    if (r < .08) { give('shell', 1, fishing.bx, fishing.by); showMessage('A surprise', 'You hooked a shell instead of a fish.'); }
+    if (r < .08) { give('shell', 1, fishing.bx, fishing.by); showMessage(t('msg.surprise.t'), t('msg.surprise.b')); }
     else { give('fish', 1, fishing.bx, fishing.by); S.flags.fish++; }
     SFX.splash(); SFX.pop(); burst(fishing.bx, fishing.by, 12, 'splash', '#d6f6f4');
-  } else { floaters.push({ x: fishing.bx, y: fishing.by - 10, text: 'Reeled in', life: 1 }); }
+  } else { floaters.push({ x: fishing.bx, y: fishing.by - 10, text: t('float.reeled'), life: 1 }); }
   fishing = null; swing('rod');
 }
 function eat(item) {
@@ -141,7 +141,7 @@ function eat(item) {
   S.st.hunger = clamp(S.st.hunger + (f.hu || 0), 0, 100); S.st.thirst = clamp(S.st.thirst + (f.th || 0), 0, 100);
   S.st.health = clamp(S.st.health + (f.he || 0), 0, 100); S.st.warmth = clamp(S.st.warmth + (f.wa || 0), 0, 100);
   SFX.eat(); burst(S.p.x, S.p.y - 26, 6, 'chip', item === 'berries' ? '#c93f5c' : '#e8c89a');
-  floaters.push({ x: S.p.x, y: S.p.y - 34, text: f.he < 0 ? 'Raw… tummy ache' : `Ate ${ITEMS[item].n}`, life: 1.3 });
+  floaters.push({ x: S.p.x, y: S.p.y - 34, text: f.he < 0 ? t('float.raw') : t('float.ate', { item: itemName(item) }), life: 1.3 });
 }
 function eatBest() {
   const st = S.st;
@@ -153,10 +153,10 @@ function eatBest() {
     if (S.flags.raft && ITEMS[it].cooked && cnt('cookedFish') + cnt('cookedCrab') <= 3 && (has('berries') || has('coconut'))) continue;
     eat(it); return;
   }
-  floaters.push({ x: S.p.x, y: S.p.y - 34, text: 'Nothing to eat', life: 1 });
+  floaters.push({ x: S.p.x, y: S.p.y - 34, text: t('float.nothing'), life: 1 });
 }
 function sleep(o) {
-  mode = 'cutscene'; fadeTo(true, 'Zzz…');
+  mode = 'cutscene'; fadeTo(true, t('fade.sleep'));
   setTimeout(() => {
     const day = Math.floor(S.time); const hr = hour();
     S.time = (hr >= 19 ? day + 1 : day) + .26;
@@ -184,9 +184,9 @@ function renderRecipes() {
     const owned = r.tool && has(r.id);
     const built = r.id === 'raft' && S.flags.raft;
     const div = document.createElement('div'); div.className = 'rc' + (owned || built ? ' owned' : '');
-    const costs = Object.entries(r.cost).map(([k, n]) => `<span class="cost${cnt(k) < n ? ' short' : ''}"><img src="${ICON[k]}" alt="">${Math.min(cnt(k), n)}/${n} ${ITEMS[k].n}</span>`).join('');
+    const costs = Object.entries(r.cost).map(([k, n]) => `<span class="cost${cnt(k) < n ? ' short' : ''}"><img src="${ICON[k]}" alt="">${Math.min(cnt(k), n)}/${n} ${itemName(k)}</span>`).join('');
     const ok = canAfford(r) && !owned && !built;
-    div.innerHTML = `<img src="${ICON[r.id]}" alt=""><div class="nm">${r.n}</div><div class="ds">${r.d}</div><div class="costs">${costs}</div><button class="mk" id="mk-${r.id}" ${ok ? '' : 'disabled'}>${owned ? 'Owned' : built ? 'Built' : r.place ? 'Craft and place' : 'Craft'}</button>`;
+    div.innerHTML = `<img src="${ICON[r.id]}" alt=""><div class="nm">${t('recipe.' + r.id)}</div><div class="ds">${t('recipe.' + r.id + '.d')}</div><div class="costs">${costs}</div><button class="mk" id="mk-${r.id}" ${ok ? '' : 'disabled'}>${t(owned ? 'craft.owned' : built ? 'craft.built' : r.place ? 'craft.makePlace' : 'craft.make')}</button>`;
     div.querySelector('button').addEventListener('click', () => craft(r));
     box.appendChild(div);
   }
@@ -215,7 +215,7 @@ function placeValid() {
 }
 function confirmPlace() {
   if (!placing) return;
-  if (!placeValid()) { floaters.push({ x: S.p.x, y: S.p.y - 34, text: placing.id === 'raft' ? 'Face the shallow sea' : 'Not enough room here', life: 1 }); SFX.hurt(); return; }
+  if (!placeValid()) { floaters.push({ x: S.p.x, y: S.p.y - 34, text: t(placing.id === 'raft' ? 'float.raftFace' : 'float.noRoom'), life: 1 }); SFX.hurt(); return; }
   if (!canAfford(placing)) { cancelPlacing(); return; }
   for (const [k, n] of Object.entries(placing.cost)) take(k, n);
   const { x, y } = placePos();

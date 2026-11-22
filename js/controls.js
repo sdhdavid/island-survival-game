@@ -30,6 +30,15 @@ $('muteBtn').addEventListener('click', toggleMute);
 $('startBtn').addEventListener('click', () => startNew());
 $('contBtn').addEventListener('click', () => { const d = store.get(SAVE_KEY); if (d) startFrom(d); else startNew(); });
 $('againBtn').addEventListener('click', () => { $('end').hidden = true; sail = null; startNew(); });
+for (const b of document.querySelectorAll('.langBtn')) b.addEventListener('click', () => { setLang(LANG === 'he' ? 'en' : 'he'); focusGame(); });
+// Re-render text built in code after the language changes
+function refreshLangDynamic() {
+  setStartLabel();
+  hotbarDirty = true; lastPrompt = null;
+  if (!craftEl.hidden) renderRecipes();
+  if (!$('end').hidden && S) fillEndScreen();
+  if (S && mode === 'play') updateHUD();
+}
 
 function beginPlay(intro) {
   auInit();
@@ -38,8 +47,8 @@ function beginPlay(intro) {
   crabs = []; particles = []; floaters = []; footprints = []; fishing = null; placing = null; sail = null;
   for (let i = 0; i < 7; i++) updateCrabs(5);
   hotbarDirty = true; checkQuests(); updateHUD(); buildMinimap();
-  if (intro) setTimeout(() => showMessage('Washed ashore', 'Your ship is gone, but the sea left a few things on the sand. Open the crate nearby, then gather what you can before night falls. It gets cold here.', 9), 600);
-  else showMessage('Welcome back', 'Your camp is just as you left it.', 4);
+  if (intro) setTimeout(() => showMessage(t('msg.intro.t'), t('msg.intro.b'), 9), 600);
+  else showMessage(t('msg.back.t'), t('msg.back.b'), 4);
 }
 function startNew() { if (!ready) return; store.del(SAVE_KEY); genObjects(); S = newState(); S.p.dy = -1; beginPlay(true); }
 function startFrom(d) { try { loadInto(d); beginPlay(false); } catch (e) { startNew(); } }
