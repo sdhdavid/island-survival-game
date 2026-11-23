@@ -1,0 +1,16 @@
+{
+  "name": "האי של יוני",
+  "short_name": "האי של יוני",
+  "description": "משחק הישרדות על אי: אוספים, בונים מדורה, שורדים את הלילה ומפליגים הביתה ברפסודה.",
+  "lang": "he",
+  "dir": "rtl",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen",
+  "orientation": "any",
+  "background_color": "#2b86b2",
+  "theme_color": "#2b86b2",
+  "icons": [
+    { "src": "icon.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}

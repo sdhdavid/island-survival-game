@@ -25,6 +25,8 @@ const STR = {
     'hud.craftTitle': 'Crafting (C)', 'hud.craftAria': 'Open crafting',
     'hud.soundTitle': 'Sound (M)', 'hud.soundAria': 'Toggle sound',
     'hud.helpTitle': 'How to play (H)', 'hud.helpAria': 'How to play',
+    'hud.fsTitle': 'Full screen',
+    'title.iosHint': 'On iPhone: tap Share, then "Add to Home Screen". Open the game from the new icon to play full screen.',
     'hud.eatTitle': '{item}: click to eat',
     'touch.use': 'Use', 'touch.eat': 'Eat', 'touch.craft': 'Craft',
 
@@ -150,6 +152,8 @@ const STR = {
     'hud.craftTitle': 'בנייה (C)', 'hud.craftAria': 'פתיחת חלון הבנייה',
     'hud.soundTitle': 'קול (M)', 'hud.soundAria': 'הפעלה וכיבוי של הקול',
     'hud.helpTitle': 'איך משחקים (H)', 'hud.helpAria': 'איך משחקים',
+    'hud.fsTitle': 'מסך מלא',
+    'title.iosHint': 'באייפון: לחץ על כפתור השיתוף ואז על "הוספה למסך הבית". פתח את המשחק מהאייקון החדש, והוא יתפוס את כל המסך.',
     'hud.eatTitle': '{item}: לחץ כדי לאכול',
     'touch.use': 'פעולה', 'touch.eat': 'אוכל', 'touch.craft': 'בנייה',
 

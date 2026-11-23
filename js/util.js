@@ -1,6 +1,6 @@
 "use strict";
 // Game version: bump on every change that goes to main, and add a matching entry to CHANGELOG.md
-const GAME_VERSION = '0.4.0';
+const GAME_VERSION = '0.5.0';
 
 // ================= Utilities =================
 const TAU = Math.PI * 2;

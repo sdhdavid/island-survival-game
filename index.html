@@ -20,6 +20,16 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="icon.png">
 <link rel="apple-touch-icon" href="icon.png">
+<!-- Installable as an app: opened from the home screen it runs full screen (the only way to get full screen on iPhone) -->
+<meta name="theme-color" content="#2b86b2">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="האי של יוני">
+<script>
+  // The manifest is only added when served over http(s); browsers refuse to load it from file://
+  if (/^https?:$/.test(location.protocol)) document.write('<link rel="manifest" href="manifest.webmanifest">');
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Grandstander:wght@500;700;800&family=Nunito:wght@500;700;800&family=Fredoka:wght@500;600;700&family=Rubik:wght@500;700;800&display=swap">
@@ -44,6 +54,7 @@
     <div class="iconrow">
       <button class="iconbtn" id="craftBtn" title="Crafting (C)" aria-label="Open crafting" data-i18n-title="hud.craftTitle" data-i18n-aria="hud.craftAria"><svg viewBox="0 0 24 24" fill="none" stroke="#fff4dc" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4l6 6-3 3-6-6z"/><path d="M11 7L3 15l3 3 8-8"/></svg></button>
       <button class="iconbtn" id="muteBtn" title="Sound (M)" aria-label="Toggle sound" data-i18n-title="hud.soundTitle" data-i18n-aria="hud.soundAria"><svg viewBox="0 0 24 24" fill="none" stroke="#fff4dc" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h4l5-4v14l-5-4H4z"/><path id="muteWave" d="M16.5 8.5a5 5 0 0 1 0 7"/></svg></button>
+      <button class="iconbtn" id="fsBtn" hidden title="Full screen" aria-label="Full screen" data-i18n-title="hud.fsTitle" data-i18n-aria="hud.fsTitle"><svg viewBox="0 0 24 24" fill="none" stroke="#fff4dc" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path id="fsIconPath" d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
       <button class="iconbtn" id="helpBtn" title="How to play (H)" aria-label="How to play" data-i18n-title="hud.helpTitle" data-i18n-aria="hud.helpAria">?</button>
     </div>
   </div>
@@ -107,6 +118,7 @@
     </div>
     <div class="keys card"><span><kbd>WASD</kbd><i data-i18n="keys.walk">walk</i></span><span><kbd>E</kbd><i data-i18n="keys.use">use</i></span><span><kbd>C</kbd><i data-i18n="keys.craft">craft</i></span><span><kbd>F</kbd><i data-i18n="keys.eat">eat</i></span></div>
     <div><button class="langBtn titleLang" id="langBtnTitle">עברית</button></div>
+    <div class="iosHint" id="iosHint" hidden data-i18n="title.iosHint">On iPhone: tap Share, then "Add to Home Screen" to play full screen.</div>
   </div>
 </div>
 <div id="ver"></div>
