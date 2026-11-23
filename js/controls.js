@@ -27,9 +27,33 @@ craftEl.addEventListener('pointerdown', e => { if (e.target === craftEl) toggleC
 helpEl.addEventListener('pointerdown', e => { if (e.target === helpEl) toggleHelp(false); });
 function toggleMute() { AU.muted = !AU.muted; if (AU.master) AU.master.gain.value = AU.muted ? 0 : .8; $('muteWave').style.display = AU.muted ? 'none' : ''; store.set('driftwood-muted', AU.muted); }
 $('muteBtn').addEventListener('click', toggleMute);
-$('startBtn').addEventListener('click', () => startNew());
-$('contBtn').addEventListener('click', () => { const d = store.get(SAVE_KEY); if (d) startFrom(d); else startNew(); });
-$('againBtn').addEventListener('click', () => { $('end').hidden = true; sail = null; startNew(); });
+// ---- Full screen. Phones go full screen automatically when a game starts (this has to happen inside the tap).
+// iPhone Safari has no full-screen API for pages; there the title screen explains "Add to Home Screen" instead.
+const FS = {
+  supported: !!(document.fullscreenEnabled || document.webkitFullscreenEnabled),
+  active: () => !!(document.fullscreenElement || document.webkitFullscreenElement),
+  enter() {
+    const el = document.documentElement;
+    try { const r = el.requestFullscreen ? el.requestFullscreen({ navigationUI: 'hide' }) : el.webkitRequestFullscreen && el.webkitRequestFullscreen(); if (r && r.catch) r.catch(() => { }); } catch (e) { }
+  },
+  exit() {
+    try { const r = document.exitFullscreen ? document.exitFullscreen() : document.webkitExitFullscreen && document.webkitExitFullscreen(); if (r && r.catch) r.catch(() => { }); } catch (e) { }
+  }
+};
+const isStandalone = () => matchMedia('(display-mode: fullscreen), (display-mode: standalone)').matches || navigator.standalone === true;
+function autoFullscreen() { if (isTouch && FS.supported && !FS.active() && !isStandalone()) FS.enter(); }
+function updateFsButton() {
+  $('fsIconPath').setAttribute('d', FS.active() ? 'M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5' : 'M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5');
+}
+$('fsBtn').hidden = !FS.supported || isStandalone();
+$('fsBtn').addEventListener('click', () => { FS.active() ? FS.exit() : FS.enter(); focusGame(); });
+document.addEventListener('fullscreenchange', updateFsButton);
+document.addEventListener('webkitfullscreenchange', updateFsButton);
+$('iosHint').hidden = !(/iPhone|iPod/.test(navigator.userAgent) && !FS.supported && !isStandalone());
+
+$('startBtn').addEventListener('click', () => { autoFullscreen(); startNew(); });
+$('contBtn').addEventListener('click', () => { autoFullscreen(); const d = store.get(SAVE_KEY); if (d) startFrom(d); else startNew(); });
+$('againBtn').addEventListener('click', () => { autoFullscreen(); $('end').hidden = true; sail = null; startNew(); });
 for (const b of document.querySelectorAll('.langBtn')) b.addEventListener('click', () => { setLang(LANG === 'he' ? 'en' : 'he'); focusGame(); });
 // Re-render text built in code after the language changes
 function refreshLangDynamic() {
